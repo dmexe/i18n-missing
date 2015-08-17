@@ -20,7 +20,10 @@ class I18n::Backend::Simple
     end
 
     def print_debug_message(keys, caller)
+      return if keys[1] == :simple_form
+
       caller_line = caller.detect{|f| f !~ /i18n/}
+
       (Gem.paths.path.clone << ENV['HOME']).each { |base| caller_line.sub!(base, '...') }
 
       puts %|I18n: couldn't find "\e[1;33m#{keys.map(&:to_s).join('.')}\e[0;0m"\n  (from #{caller_line})}|
